@@ -1,0 +1,9 @@
+const ACCOUNT_STATUS_TYPES = {
+  PENDING: "PENDING",
+  ACTIVE: "ACTIVE",
+  DELETED: "DELETED",
+};
+
+module.exports = {
+  ACCOUNT_STATUS_TYPES,
+};
