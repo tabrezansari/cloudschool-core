@@ -23,6 +23,9 @@ module.exports = (app) => {
     validation.auth.changePassword,
     authController.changePassword
   );
+  router.get("/invite", authController.verifyInvite);
+
   router.post("/resend", validation.auth.resend, authController.resendLink);
+  router.post("/invite", validation.auth.userInvite, authController.InviteUser);
   app.use("/api/auth/", router);
 };

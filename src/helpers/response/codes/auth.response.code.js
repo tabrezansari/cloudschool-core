@@ -11,7 +11,9 @@ let AuthCodes = {
   1010: "We have sent password resent link to your email",
   1011: "Could not send reset link ",
   1012: "Looks like your link has expired",
-
+  1013: "Users have been invited",
+  1014: "Could not invite users",
+  1015: "You have been invited",
   100000: "Something went wrong please try again later",
 };
 

@@ -1,23 +1,23 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("user_invites", {
+  sequelize.define("class_exams", {
     id: {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
     },
-    role_id: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
-      type: DataTypes.STRING,
+    year: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    invite_id: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    marks_type: {
+      type: DataTypes.ENUM,
+      values: ["GRADE", "NUMBER"],
     },
   });
 };

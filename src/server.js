@@ -20,7 +20,7 @@ app.use(
 );
 
 sequelize
-  .sync({ alter: true })
+  .sync()
   .then(() => {
     console.log("Synced db.");
   })
@@ -37,6 +37,10 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/auth")(app);
+require("./routes/users")(app);
+require("./routes/common")(app);
+require("./routes/organisation")(app);
+require("./routes/class")(app);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

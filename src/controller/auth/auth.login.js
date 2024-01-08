@@ -4,9 +4,6 @@ const tokenization = require("../../helpers/Tokenization");
 
 //Database Model
 const { models } = require("../../models");
-const Property = models.property;
-const { ACCOUNT_STATUS_TYPES } = require("../../constants/global.constants");
-const userObjectFormatter = require("../../helpers/Formatter/user.info.formatter");
 const Users = models.users;
 
 const login = async (req, res, next) => {
@@ -16,7 +13,7 @@ const login = async (req, res, next) => {
     where: {
       email: email,
     },
-    attributes: ["email", "password", "role_id", "id"],
+    attributes: ["email", "password", "userRoleId", "id", "userOrganisationId"],
     include: [{ model: models.user_profile }],
   })
     .then(async (data) => {
@@ -26,6 +23,7 @@ const login = async (req, res, next) => {
             sub: email,
             sub_id: data.dataValues.id,
             role_id: data.dataValues.role_id,
+            org_id: data.dataValues.userOrganisationId,
           });
           res.status(200).json(
             response.success(
@@ -44,6 +42,7 @@ const login = async (req, res, next) => {
       }
     })
     .catch((err) => {
+      console.log(err);
       res.status(401).json(response.error(res.statusCode, 1002));
     });
 };

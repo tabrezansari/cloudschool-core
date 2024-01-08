@@ -8,13 +8,13 @@ module.exports = (sequelize) => {
       primaryKey: true,
       unique: true,
     },
-    role_id: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     auto_assign_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
+      unique: true,
+    },
+    sid: {
+      type: DataTypes.INTEGER,
       unique: true,
     },
     email: {

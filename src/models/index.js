@@ -22,6 +22,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 const modelDefiners = [
   ...require("./user"),
+  ...require("./class"),
+  ...require("./subjects"),
+
   // Add more models here...
   // require('./models/item'),
 ];

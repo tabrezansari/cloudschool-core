@@ -46,10 +46,19 @@ const changePassword = async (req, res, next) => {
   await validator.payloadValidator(req, res, next, validationRule);
 };
 
+const userInvite = async (req, res, next) => {
+  const validationRule = {
+    members: "required|array",
+  };
+
+  await validator.payloadValidator(req, res, next, validationRule);
+};
+
 module.exports = {
   signup,
   login,
   resend,
   forgotPassword,
   changePassword,
+  userInvite,
 };

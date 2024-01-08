@@ -18,6 +18,7 @@ module.exports = async function isTokenValid(req, res, next) {
       req.body.user_id = decoded.sub_id;
       req.params.user_id = decoded.sub_id;
       req.params.user_role_id = decoded.role_id;
+      req.params.__user_org_id__ = decoded.org_id;
 
       next();
     } catch (error) {

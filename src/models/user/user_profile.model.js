@@ -7,10 +7,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
-    member_id: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+
     first_name: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -24,10 +21,6 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
     mobile: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    nationality: {
       type: DataTypes.STRING,
       allowNull: true,
     },
