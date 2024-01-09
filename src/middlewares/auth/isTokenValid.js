@@ -22,7 +22,7 @@ module.exports = async function isTokenValid(req, res, next) {
 
       next();
     } catch (error) {
-      res.status(401).json(response.error(res.statusCode, 1006));
+      res.status(401).json(response.error(res.statusCode, 401));
     }
   }
 };

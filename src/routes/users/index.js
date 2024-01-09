@@ -26,5 +26,18 @@ module.exports = (app) => {
     userController.RegisterStudents
   );
 
+  router.post(
+    "/students/move",
+    authMiddleware.isTokenValid,
+    validation.user.moveStudents,
+    userController.MoveStudents
+  );
+
+  router.post(
+    "/:userId/status/:statusKey",
+    authMiddleware.isTokenValid,
+    userController.UpdateUserStatus
+  );
+
   app.use("/api/user/", router);
 };

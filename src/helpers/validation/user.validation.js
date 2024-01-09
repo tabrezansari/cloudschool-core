@@ -17,7 +17,17 @@ const createStudents = async (req, res, next) => {
   await validator.payloadValidator(req, res, next, validationRule);
 };
 
+const moveStudents = async (req, res, next) => {
+  const validationRule = {
+    currentSectionId: "required|string",
+    nextSectionId: "required|string",
+  };
+
+  await validator.payloadValidator(req, res, next, validationRule);
+};
+
 module.exports = {
   createuser,
   createStudents,
+  moveStudents,
 };
