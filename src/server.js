@@ -31,7 +31,7 @@ sequelize
 app.get("/", (req, res) => {
   res.json({
     version: "1.0.0",
-    api: "R-Estate API Services",
+    api: "Cloud SChool API Services",
     health: "Running ✅",
   });
 });
@@ -41,6 +41,7 @@ require("./routes/users")(app);
 require("./routes/common")(app);
 require("./routes/organisation")(app);
 require("./routes/class")(app);
+require("./routes/exams")(app);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

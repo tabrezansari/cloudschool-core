@@ -1,32 +1,31 @@
 const response = require("../../helpers/response");
 const { uuid } = require("uuidv4");
 const bcrypt = require("bcrypt");
+const moment = require("moment");
 
 //Database Model
 const { models } = require("../../models");
 const { ACCOUNT_STATUS_TYPES } = require("../../constants/global.constants");
 // const UserProfile = models.user_profile;
-const Classes = models.classes;
+const Exams = models.class_exams;
 
-const classCreate = async (req, res, next) => {
-  const { name, year } = req.body;
-  const orgId = req.params.__user_org_id__;
-
+const examCreate = async (req, res, next) => {
+  const { name, marks_type, classId } = req.body;
   //generate random password for the account
   const payload = {
     id: uuid(),
     name: name,
-    userOrganisationId: orgId,
-    year: year,
+    year: moment().format("YYYY"),
+    marks_type: marks_type,
+    classId: classId,
   };
-  Classes.create(payload)
+  Exams.create(payload)
     .then((data) => {
-      res.status(200).json(response.success(data, 6003));
+      res.status(200).json(response.success(data, 7003));
     })
     .catch((err) => {
-      console.log(err);
-      res.status(401).json(response.error(res.statusCode, 6004));
+      res.status(401).json(response.error(res.statusCode, 7004));
     });
 };
 
-module.exports = classCreate;
+module.exports = examCreate;

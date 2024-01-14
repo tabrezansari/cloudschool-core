@@ -1,3 +1,5 @@
+const moment = require("moment");
+const { Sequelize } = require("sequelize");
 const { attachAssetURL } = require("../../helpers/Formatter/AvatarFormatter");
 const response = require("../../helpers/response");
 
@@ -7,8 +9,26 @@ const Classes = models.classes;
 
 const classList = async (req, res, next) => {
   const orgId = req.params.__user_org_id__;
+  const year = req.query.year || moment().format("YYYY");
   Classes.findAll({
-    where: { userOrganisationId: orgId },
+    where: { userOrganisationId: orgId, year: year },
+    include: [
+      {
+        model: models.class_sections,
+        attributes: [
+          "id",
+          "name",
+          // [Sequelize.fn("COUNT", Sequelize.col("users")), "counteduser"],
+        ],
+
+        include: [
+          {
+            model: models.users,
+          },
+        ],
+      },
+    ],
+    // attributes: ["id", "name"],
   })
     .then((data) => {
       if (data) {
