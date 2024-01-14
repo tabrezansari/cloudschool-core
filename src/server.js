@@ -3,6 +3,7 @@ const app = express();
 const sequelize = require("./models");
 const fs = require("fs").promises;
 const dotenv = require("dotenv");
+const retrieveSecrets = require("./utils/retrieveSecrets");
 
 const port = 4000;
 
@@ -50,5 +51,20 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, async () => {
+  try {
+    const secretsString = await retrieveSecrets();
+    // console.log("env are:", secretsString);
+    //write to .env file at root level of project:
+    await fs.writeFile(".env", secretsString);
+
+    dotenv.config();
+
+    console.log(`Example app listening at http://localhost:${port}`);
+  } catch (error) {
+    //log the error and crash the app
+    console.log("Error in setting environment variables", error);
+    process.exit(-1);
+  }
+
   console.log(`Example app listening at http://localhost:${port}`);
 });
