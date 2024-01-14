@@ -31,7 +31,7 @@ sequelize
 app.get("/", (req, res) => {
   res.json({
     version: "1.0.0",
-    api: "Cloud SChool API Services",
+    api: "Cloud SChoold API Services",
     health: "Running ✅",
   });
 });

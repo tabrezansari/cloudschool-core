@@ -10,7 +10,7 @@ const Exams = models.class_exams;
 const examList = async (req, res, next) => {
   const orgId = req.params.__user_org_id__;
   const classId = req.query.class;
-  const year = req.quer.year || moment().format("YYYY");
+  // const year = req.quer.year || moment().format("YYYY");
   Exams.findAll({
     where: { classId: classId },
     // attributes: ["id", "name"],

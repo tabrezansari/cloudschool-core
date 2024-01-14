@@ -12,6 +12,13 @@ module.exports = (app) => {
     examController.examCreate
   );
 
+  router.put(
+    "/:id/status/:statusId",
+    authMiddleware.isTokenValid,
+    // validation.class.createClass,
+    examController.updateExam
+  );
+
   router.get("/list", authMiddleware.isTokenValid, examController.examList);
   app.use("/api/exams/", router);
 };

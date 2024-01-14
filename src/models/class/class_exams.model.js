@@ -19,5 +19,9 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM,
       values: ["GRADE", "NUMBER"],
     },
+    status: {
+      type: DataTypes.ENUM,
+      values: ["COMPLETED", "CANCELLED", "POSTPONED", "DELETED", "IN_PROGRESS"],
+    },
   });
 };

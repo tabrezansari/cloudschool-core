@@ -18,6 +18,7 @@ const examCreate = async (req, res, next) => {
     year: moment().format("YYYY"),
     marks_type: marks_type,
     classId: classId,
+    status: "IN_PROGRESS",
   };
   Exams.create(payload)
     .then((data) => {
