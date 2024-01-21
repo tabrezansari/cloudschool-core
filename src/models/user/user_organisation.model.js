@@ -19,5 +19,17 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    logo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    short_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    whitelist_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 };

@@ -21,7 +21,7 @@ app.use(
 );
 
 sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log("Synced db.");
   })
@@ -43,6 +43,7 @@ require("./routes/common")(app);
 require("./routes/organisation")(app);
 require("./routes/class")(app);
 require("./routes/exams")(app);
+require("./routes/subjects")(app);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -54,11 +55,11 @@ app.listen(port, async () => {
   try {
     const secretsString = await retrieveSecrets();
     // console.log("env are:", secretsString);
-    //write to .env file at root level of project:
+    // write to .env file at root level of project:
     await fs.writeFile(".env", secretsString);
 
     dotenv.config();
-
+    //
     console.log(`Example app listening at http://localhost:${port}`);
   } catch (error) {
     //log the error and crash the app

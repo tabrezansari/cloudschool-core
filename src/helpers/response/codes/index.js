@@ -3,6 +3,7 @@ const ProfileCodes = require("./profile.response.code");
 const organisationCodes = require("./organisation.response.code");
 const classCodes = require("./class.response.code");
 const examCodes = require("./exam.response.code");
+const SubjectCodes = require("./subject.response.code");
 
 let allCodes = {
   ...AuthCodes,
@@ -10,6 +11,7 @@ let allCodes = {
   ...organisationCodes,
   ...classCodes,
   ...examCodes,
+  ...SubjectCodes,
   404: "Could not find resource you are looking for",
 };
 

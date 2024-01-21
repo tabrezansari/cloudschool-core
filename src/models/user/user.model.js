@@ -14,8 +14,9 @@ module.exports = (sequelize) => {
       unique: true,
     },
     sid: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       unique: true,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,

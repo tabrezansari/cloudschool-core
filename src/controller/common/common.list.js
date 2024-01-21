@@ -6,6 +6,8 @@ const modelMap = {
   USER_ROLES: models.user_roles,
   CLASSES: models.classes,
   SECTIONS: models.class_sections,
+  ORGANISATIONS: models.user_organisation,
+  EXAMINATION: models.class_exams,
 };
 
 const CommonList = async (req, res, next) => {
