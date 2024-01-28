@@ -21,7 +21,7 @@ app.use(
 );
 
 sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     console.log("Synced db.");
   })
@@ -44,6 +44,7 @@ require("./routes/organisation")(app);
 require("./routes/class")(app);
 require("./routes/exams")(app);
 require("./routes/subjects")(app);
+require("./routes/dashboard")(app);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

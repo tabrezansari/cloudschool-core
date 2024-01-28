@@ -7,6 +7,7 @@ const { models } = require("../../models");
 const { ACCOUNT_STATUS_TYPES } = require("../../constants/global.constants");
 // const UserProfile = models.user_profile;
 const User = models.users;
+const UserRole = models.user_roles;
 
 function generatePassword() {
   var length = 8,
@@ -20,12 +21,21 @@ function generatePassword() {
 const InternalUserRegister = async (req, res, next) => {
   const { users } = req.body;
   //generate random password for the account
+
+  const getStaffRole = await UserRole.findOne({
+    where: { role_name: "Staff" },
+  }).then((data) => {
+    return data;
+  });
+  console.log(getStaffRole);
   await Promise.all(
     users.map(async (user) => {
       user.id = uuid();
       user.verify_token = null;
       user.status = ACCOUNT_STATUS_TYPES.ACTIVE;
       user.password = await bcrypt.hash(generatePassword(), 10);
+      user.sid = user.sid || "STAFF";
+      user.userRoleId = getStaffRole.id;
     })
   );
 
