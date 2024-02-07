@@ -20,6 +20,7 @@ const UpdateUserStatus = async (req, res, next) => {
   };
   User.update(statusPayload, { where: { id: userId } })
     .then((num) => {
+      console.log("num", userId);
       if (num == 1) {
         res.status(200).json(response.success(null, 2007));
       } else {
@@ -27,6 +28,7 @@ const UpdateUserStatus = async (req, res, next) => {
       }
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).json(response.error(res.statusCode, 2008));
     });
 };

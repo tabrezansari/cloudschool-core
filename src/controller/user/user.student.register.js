@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 //Database Model
 const { models } = require("../../models");
 const { ACCOUNT_STATUS_TYPES } = require("../../constants/global.constants");
+const sendEmail = require("../../helpers/communication/email.helper");
 // const UserProfile = models.user_profile;
 const User = models.users;
 const UserRoles = models.user_roles;
@@ -35,13 +36,15 @@ const RegisterStudents = async (req, res, next) => {
   //generate random password for the account
   await Promise.all(
     students.map(async (student) => {
+      let password = generatePassword();
       let userNewId = uuid();
       student.id = userNewId;
       student.verify_token = null;
       student.status = ACCOUNT_STATUS_TYPES.ACTIVE;
-      student.password = await bcrypt.hash(generatePassword(), 10);
+      student.password = await bcrypt.hash(password, 10);
       student.userRoleId = Studentrole.id;
       student.userOrganisationId = orgId;
+      student.realPass = password;
       profilePayload.push({
         first_name: student.first_name,
         last_name: student.last_name,
@@ -50,14 +53,25 @@ const RegisterStudents = async (req, res, next) => {
       });
     })
   );
-
   User.bulkCreate(students)
     .then((data) => {
       UserProfile.bulkCreate(profilePayload)
         .then((newData) => {
+          students.forEach(async (userData) => {
+            await Promise.all(
+              students.map(async (student) => {
+                await sendEmail(student.email, "STUDENT_INVITE", {
+                  name: student.first_name,
+                  temp_password: student.realPass,
+                });
+              })
+            );
+          });
           res.status(200).json(response.success(null, 2005));
         })
         .catch((err) => {
+          console.log(err);
+
           res.status(401).json(response.error(res.statusCode, 2006));
         });
     })

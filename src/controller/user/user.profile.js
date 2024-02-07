@@ -1,4 +1,9 @@
-const { attachAssetURL } = require("../../helpers/Formatter/AvatarFormatter");
+const { Sequelize } = require("sequelize");
+const sendEmail = require("../../helpers/communication/email.helper");
+const {
+  attachAssetURL,
+  getAssetPrefixURL,
+} = require("../../helpers/Formatter/AvatarFormatter");
 const response = require("../../helpers/response");
 
 //Database Model
@@ -10,10 +15,36 @@ const getProfile = async (req, res, next) => {
   const otherUserId = req.params.otherUserId;
 
   const finalUserId = otherUserId || userId;
+  console.log("finalUserId", finalUserId);
+
   Users.findOne({
     include: [
       {
         model: models.user_profile,
+        attributes: [
+          "mobile",
+          "gender",
+          "dob",
+          "city",
+
+          [
+            Sequelize.fn(
+              "concat",
+              Sequelize.col("first_name"),
+              " ",
+              Sequelize.col("last_name")
+            ),
+            "full_name",
+          ],
+          [
+            Sequelize.fn(
+              "concat",
+              getAssetPrefixURL("avatar"),
+              Sequelize.col("avatar")
+            ),
+            "avatar",
+          ],
+        ],
       },
     ],
     where: { id: finalUserId },

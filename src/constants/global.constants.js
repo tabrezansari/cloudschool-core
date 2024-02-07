@@ -2,6 +2,7 @@ const ACCOUNT_STATUS_TYPES = {
   PENDING: "PENDING",
   ACTIVE: "ACTIVE",
   DELETED: "DELETED",
+  DISABLED: "DISABLED",
 };
 
 module.exports = {

@@ -9,6 +9,8 @@ let ProfileCodes = {
   2008: "Could not update profile status",
   2009: "Student moving succesfull",
   2010: "Could not move students",
+  2011: "Profile avatar updated",
+  2012: "Could not update profile avatar",
 };
 
 module.exports = ProfileCodes;
