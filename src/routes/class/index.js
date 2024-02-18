@@ -19,6 +19,12 @@ module.exports = (app) => {
     classController.classSectionCreate
   );
 
+  router.put(
+    "/:classId",
+    authMiddleware.isTokenValid,
+    classController.classUpdate
+  );
+
   router.get("/list", authMiddleware.isTokenValid, classController.classList);
   app.use("/api/class/", router);
 };
