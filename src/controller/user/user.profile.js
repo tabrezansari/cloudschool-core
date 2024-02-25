@@ -46,6 +46,9 @@ const getProfile = async (req, res, next) => {
           ],
         ],
       },
+      {
+        model: models.user_roles,
+      },
     ],
     where: { id: finalUserId },
   })

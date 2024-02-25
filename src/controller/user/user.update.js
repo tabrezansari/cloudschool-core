@@ -18,6 +18,7 @@ const UserUpdate = async (req, res, next) => {
 
   UserProfile.update(req.body, { where: { userId: userId } })
     .then((num) => {
+      console.log("fdsfs", num);
       if (num > 0 || num[0] > 0) {
         res.status(200).json(response.success(null, 2013));
       } else {
