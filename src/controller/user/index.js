@@ -4,6 +4,7 @@ const getProfile = require("./user.profile");
 const updataProfileAvatar = require("./user.profile.avatar");
 const MoveStudents = require("./user.student.move");
 const RegisterStudents = require("./user.student.register");
+const UserUpdate = require("./user.update");
 const UpdateUserStatus = require("./user.update_status");
 
 module.exports = {
@@ -14,4 +15,5 @@ module.exports = {
   UpdateUserStatus: UpdateUserStatus,
   MoveStudents: MoveStudents,
   updataProfileAvatar: updataProfileAvatar,
+  UserUpdate: UserUpdate,
 };

@@ -11,6 +11,7 @@ const Exams = models.class_exams;
 const Organisation = models.user_organisation;
 const Students = models.users;
 const ExamParticipant = models.exam_participants;
+const UserRoles = models.user_roles;
 
 function generateToken() {
   const randomNum = Math.random() * 9000;
@@ -22,17 +23,24 @@ const createExamParticipants = async (examData, req, res, next) => {
 
   const payload = [];
 
+  const Studentrole = await UserRoles.findOne({
+    where: {
+      role_name: "Student",
+    },
+  }).then((data) => {
+    return data.dataValues;
+  });
+
   const classStudents = await Students.findAll({
+    where: { userRoleId: Studentrole.id },
     include: {
       model: models.class_sections,
-      include: {
-        model: models.classes,
-        where: { id: classId },
-      },
+      where: { classId: classId },
     },
   }).then((data) => {
     return data;
   });
+
   await classStudents.forEach((student) => {
     payload.push({
       id: uuid(),

@@ -35,6 +35,7 @@ const ExamResultList = async (req, res, next) => {
   //   ],
   // })
   ExamParticipants.findAll({
+    where: { classExamId: examId },
     include: { model: models.users, include: models.user_profile },
     attributes: {
       include: [
@@ -60,13 +61,18 @@ const ExamResultList = async (req, res, next) => {
   })
     .then((data) => {
       if (data) {
+        let finalResults = [];
         data.map((result) => {
           result.dataValues["result"] =
-            result.dataValues.scored_marks > result.dataValues.passing_marks
+            parseInt(result.dataValues.scored_marks) >
+            parseInt(result.dataValues.passing_marks)
               ? "PASS"
               : "FAILED";
+          if (result.dataValues.scored_marks) {
+            finalResults.push(result);
+          }
         });
-        res.status(200).json(response.success(data, 7007));
+        res.status(200).json(response.success(finalResults, 7007));
       } else {
         res.status(200).json(response.error(res.statusCode, 7008));
       }

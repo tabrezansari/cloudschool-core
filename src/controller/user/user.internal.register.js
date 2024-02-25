@@ -9,6 +9,7 @@ const sendEmail = require("../../helpers/communication/email.helper");
 // const UserProfile = models.user_profile;
 const User = models.users;
 const UserRole = models.user_roles;
+const UserProfile = models.user_profile;
 
 function generatePassword() {
   var length = 8,
@@ -22,38 +23,51 @@ function generatePassword() {
 const InternalUserRegister = async (req, res, next) => {
   const { users } = req.body;
   //generate random password for the account
+  let profilePayload = [];
 
   const getStaffRole = await UserRole.findOne({
     where: { role_name: "Staff" },
   }).then((data) => {
     return data;
   });
-  console.log(getStaffRole);
   await Promise.all(
     users.map(async (user) => {
       let password = generatePassword();
-      user.id = uuid();
+      let userNewId = uuid();
+
+      user.id = userNewId;
       user.verify_token = null;
       user.status = ACCOUNT_STATUS_TYPES.ACTIVE;
       user.password = await bcrypt.hash(password, 10);
       user.sid = user.sid || "STAFF";
       user.realPass = password;
       user.userRoleId = getStaffRole.id;
+      profilePayload.push({
+        first_name: user.name,
+        last_name: "",
+        id: uuid(),
+        userId: userNewId,
+        mobile: user.mobile,
+      });
     })
   );
 
   console.log(users);
   User.bulkCreate(users)
     .then(async (data) => {
-      await Promise.all(
-        users.map(async (student) => {
-          await sendEmail(student.email, "STUDENT_INVITE", {
-            name: student.email,
-            temp_password: student.realPass,
-          });
-        })
-      );
-      res.status(200).json(response.success(data, 2005));
+      UserProfile.bulkCreate(profilePayload).then((newData) => {
+        users.forEach(async (userData) => {
+          await Promise.all(
+            users.map(async (student) => {
+              await sendEmail(student.email, "STUDENT_INVITE", {
+                name: student.name,
+                temp_password: student.realPass,
+              });
+            })
+          );
+        });
+        res.status(200).json(response.success(null, 2005));
+      });
     })
     .catch((err) => {
       console.log(err);

@@ -20,6 +20,12 @@ module.exports = (app) => {
     userController.getProfile
   );
 
+  router.put(
+    "/:userId",
+    authMiddleware.isTokenValid,
+    userController.UserUpdate
+  );
+
   router.get(
     "/self/info",
     authMiddleware.isTokenValid,

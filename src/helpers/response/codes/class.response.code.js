@@ -5,6 +5,8 @@ let classCodes = {
   6004: "Could not create class",
   6005: "Class section created",
   6006: "Could not create class section",
+  6007: "Class updated",
+  6008: "Could not update class",
 };
 
 module.exports = classCodes;

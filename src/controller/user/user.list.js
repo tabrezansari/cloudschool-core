@@ -5,10 +5,20 @@ const tokenization = require("../../helpers/Tokenization");
 //Database Model
 const { models } = require("../../models");
 const Users = models.users;
-
+const Sections = models.class_sections;
 const UserList = async (req, res, next) => {
   const type = req.query.type || "All";
+  const classId = req.query.classId || "";
+
+  const getSecions = await Sections.findAll({
+    where: { classId: classId },
+  }).then((data) => {
+    return data;
+  });
+  const sectionId = getSecions.map((section) => section.id);
+  console.log("sectionId:", sectionId);
   Users.findAll({
+    where: sectionId.length > 0 ? { classSectionId: sectionId } : {},
     include: [
       { model: models.user_profile },
       {

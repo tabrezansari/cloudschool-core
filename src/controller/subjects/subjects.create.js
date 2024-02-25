@@ -28,6 +28,8 @@ const SubjectCreate = async (req, res, next) => {
     subjects.map(async (subject) => {
       subject.id = uuid();
       subject.classId = classId;
+      subject.total_marks = 100;
+      subject.passing_marks = 30;
       if (!subject.code)
         subject.code = `${getOrgInfo.short_name}-SUB-${generateToken()}`;
     })
@@ -38,6 +40,7 @@ const SubjectCreate = async (req, res, next) => {
       res.status(200).json(response.success(data, 5003));
     })
     .catch((err) => {
+      console.log(err);
       res.status(401).json(response.error(res.statusCode, 5004));
     });
 };
