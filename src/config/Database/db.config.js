@@ -4,7 +4,7 @@ module.exports = {
   HOST: process.env.DATABASE_URL,
   USER: process.env.DATABASE_USER,
   PASSWORD: process.env.DATABASE_PASSWORD,
-  DB: "cschool",
+  DB: "cloudschool",
   dialect: "mysql",
   pool: {
     max: 5,
