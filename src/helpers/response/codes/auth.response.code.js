@@ -15,6 +15,7 @@ let AuthCodes = {
   1014: "Could not invite users",
   1015: "You have been invited",
   100000: "Something went wrong please try again later",
+  1016: "Looks like your account has been disabled or deleted",
   401: "Looks like your token is expired",
 };
 

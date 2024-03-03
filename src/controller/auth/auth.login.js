@@ -13,29 +13,40 @@ const login = async (req, res, next) => {
     where: {
       email: email,
     },
-    attributes: ["email", "password", "userRoleId", "id", "userOrganisationId"],
+    attributes: [
+      "email",
+      "password",
+      "userRoleId",
+      "id",
+      "userOrganisationId",
+      "status",
+    ],
     include: [{ model: models.user_profile }],
   })
     .then(async (data) => {
       if (data) {
-        if (await bcrypt.compare(password, data.password)) {
-          const accessToken = tokenization.generateToken({
-            sub: email,
-            sub_id: data.dataValues.id,
-            role_id: data.dataValues.role_id,
-            org_id: data.dataValues.userOrganisationId,
-          });
-          res.status(200).json(
-            response.success(
-              {
-                accessToken: accessToken,
-                email: email,
-              },
-              1001
-            )
-          );
+        if (data.status === "DISABLED" || data.status === "DELETED") {
+          res.status(401).json(response.error(res.statusCode, 1016));
         } else {
-          res.status(401).json(response.error(res.statusCode, 1002));
+          if (await bcrypt.compare(password, data.password)) {
+            const accessToken = tokenization.generateToken({
+              sub: email,
+              sub_id: data.dataValues.id,
+              role_id: data.dataValues.role_id,
+              org_id: data.dataValues.userOrganisationId,
+            });
+            res.status(200).json(
+              response.success(
+                {
+                  accessToken: accessToken,
+                  email: email,
+                },
+                1001
+              )
+            );
+          } else {
+            res.status(401).json(response.error(res.statusCode, 1002));
+          }
         }
       } else {
         res.status(401).json(response.error(res.statusCode, 1002));

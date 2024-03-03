@@ -22,6 +22,8 @@ function generatePassword() {
 }
 const InternalUserRegister = async (req, res, next) => {
   const { users } = req.body;
+  const orgId = req.params.__user_org_id__;
+
   //generate random password for the account
   let profilePayload = [];
 
@@ -42,6 +44,7 @@ const InternalUserRegister = async (req, res, next) => {
       user.sid = user.sid || "STAFF";
       user.realPass = password;
       user.userRoleId = getStaffRole.id;
+      user.userOrganisationId = orgId;
       profilePayload.push({
         first_name: user.name,
         last_name: "",

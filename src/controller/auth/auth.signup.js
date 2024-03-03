@@ -11,7 +11,7 @@ const Users = models.users;
 const UserInvite = models.user_invites;
 
 const signup = async (req, res, next) => {
-  const { email, password, password_confirm } = req.body;
+  const { email, password, password_confirm, SID } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   if (password === password_confirm) {
     const userInviteInfo = await UserInvite.findOne({
@@ -30,8 +30,8 @@ const signup = async (req, res, next) => {
         userRoleId: userInviteInfo.role_id,
         id: uuid(),
         userOrganisationId: userInviteInfo.userOrganisationId,
+        sid: SID,
       };
-      console.log(userPayload);
       Users.create(userPayload)
         .then(async (data) => {
           UserInvite.destroy({
@@ -58,6 +58,7 @@ const signup = async (req, res, next) => {
           });
         })
         .catch((err) => {
+          console.log(err);
           res.status(500).json(response.error(res.statusCode, 1009));
         });
     } else {

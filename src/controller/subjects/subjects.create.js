@@ -37,11 +37,11 @@ const SubjectCreate = async (req, res, next) => {
 
   Subjects.bulkCreate(subjects)
     .then((data) => {
-      res.status(200).json(response.success(data, 5003));
+      res.status(200).json(response.success(data, 7013));
     })
     .catch((err) => {
       console.log(err);
-      res.status(401).json(response.error(res.statusCode, 5004));
+      res.status(401).json(response.error(res.statusCode, 7014));
     });
 };
 

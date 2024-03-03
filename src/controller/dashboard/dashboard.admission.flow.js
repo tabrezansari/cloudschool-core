@@ -24,8 +24,11 @@ const generateInsight = (userList) => {
   return response;
 };
 const DashboardAdmissionFlow = async (req, res, next) => {
+  const orgId = req.params.__user_org_id__;
+
   try {
     const admissionList = await Users.findAll({
+      where: { userOrganisationId: orgId },
       include: { model: models.user_roles, where: { role_name: "Student" } },
     }).then((data) => {
       return data;

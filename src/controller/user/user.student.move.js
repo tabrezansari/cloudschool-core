@@ -20,7 +20,8 @@ const MoveStudents = async (req, res, next) => {
     { where: { classSectionId: currentSectionId, userOrganisationId: orgId } }
   )
     .then((num) => {
-      if (num > 1) {
+      console.log("num", num);
+      if (num > 0 || num[0] > 0) {
         res.status(200).json(response.success(null, 2009));
       } else {
         res.status(200).json(response.error(res.statusCode, 2010));

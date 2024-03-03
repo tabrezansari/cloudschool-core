@@ -11,6 +11,8 @@ let examCodes = {
   7010: "Could not fetch exam result",
   7011: "Exam result uploaded",
   7012: "Could not upload exam result",
+  7013: "Subject created",
+  7014: "Could not create subject",
 };
 
 module.exports = examCodes;

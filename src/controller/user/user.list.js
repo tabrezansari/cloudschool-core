@@ -7,6 +7,8 @@ const { models } = require("../../models");
 const Users = models.users;
 const Sections = models.class_sections;
 const UserList = async (req, res, next) => {
+  const orgId = req.params.__user_org_id__;
+
   const type = req.query.type || "All";
   const classId = req.query.classId || "";
 
@@ -18,7 +20,10 @@ const UserList = async (req, res, next) => {
   const sectionId = getSecions.map((section) => section.id);
   console.log("sectionId:", sectionId);
   Users.findAll({
-    where: sectionId.length > 0 ? { classSectionId: sectionId } : {},
+    where:
+      sectionId.length > 0
+        ? { classSectionId: sectionId }
+        : { userOrganisationId: orgId },
     include: [
       { model: models.user_profile },
       {

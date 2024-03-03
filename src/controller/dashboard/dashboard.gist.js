@@ -39,18 +39,21 @@ const DashboardGist = async (req, res, next) => {
   const orgId = req.params.__user_org_id__;
   const year = req.query.year || moment().format("YYYY");
   try {
-    const userList = await Users.findAll({ include: models.user_roles }).then(
-      (data) => {
-        return data;
-      }
-    );
+    const userList = await Users.findAll({
+      include: models.user_roles,
+      where: { userOrganisationId: orgId },
+    }).then((data) => {
+      return data;
+    });
     const examList = await Exams.findAll({
+      include: { model: models.classes, where: { userOrganisationId: orgId } },
       where: { year: moment().format("YYYY") },
     }).then((data) => {
       return data;
     });
 
     const examResults = await ExamParticipants.findAll({
+      include: { model: models.users, where: { userOrganisationId: orgId } },
       attributes: {
         include: [
           [
@@ -81,6 +84,7 @@ const DashboardGist = async (req, res, next) => {
     );
     res.status(200).json(response.success(resultResponse, 5001));
   } catch (error) {
+    console.log(error);
     res.status(500).json(response.error(res.statusCode, 5002));
   }
 };
