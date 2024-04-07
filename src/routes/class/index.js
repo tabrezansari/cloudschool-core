@@ -26,5 +26,17 @@ module.exports = (app) => {
   );
 
   router.get("/list", authMiddleware.isTokenValid, classController.classList);
+
+  router.post(
+    "/:classId/section/:sectionId/subject/:subjectId/attendance",
+    authMiddleware.isTokenValid,
+    classController.MarkAttendance
+  );
+  router.get(
+    "/:classId/section/:sectionId/attendance",
+    authMiddleware.isTokenValid,
+    classController.ClassAttendanceView
+  );
+
   app.use("/api/class/", router);
 };

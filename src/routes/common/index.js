@@ -6,8 +6,9 @@ const commonController = require("../../controller/common");
 module.exports = (app) => {
   var router = require("express").Router();
 
+  router.get("/list", authMiddleware.isTokenValid, commonController.CommonList);
   router.get(
-    "/list",
+    "/listopen",
     // authMiddleware.isTokenValid,
     commonController.CommonList
   );

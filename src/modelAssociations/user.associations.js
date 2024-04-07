@@ -7,6 +7,7 @@ function userAssociations(sequelize) {
     class_sections,
     user_organisation,
     user_invites,
+    user_attendance,
   } = sequelize.models;
 
   /* User Associations */
@@ -39,6 +40,11 @@ function userAssociations(sequelize) {
   //  user <---> roles
   class_sections.hasMany(users);
   users.belongsTo(class_sections);
+  //  User <---> roles
+
+  //  user <---> roles
+  users.hasMany(user_attendance);
+  user_attendance.belongsTo(users);
   //  User <---> roles
 
   /* End of User Associations */
