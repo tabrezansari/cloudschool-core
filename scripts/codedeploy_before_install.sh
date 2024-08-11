@@ -8,7 +8,7 @@ nvm install node
 
 
 #create our working directory if ot doesnt exist
-DIR="/var/www/html/backend"
+DIR="/var/www/html/cloudschool-backend"
 if [ -d "$DIR" ]; then
     echo "${DIR} exists"
 else 
