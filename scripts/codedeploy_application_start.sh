@@ -1,7 +1,7 @@
 #!/bin/bash
-sudo chmod -R 777 /var/www/html/backend
+sudo chmod -R 777 /var/www/html/cloudschool-backend
 #navifate into our worling directory where we have all our github files
-cd /var/www/html/backend
+cd /var/www/html/cloudschool-backend
 
 
 #add npm and node to path
