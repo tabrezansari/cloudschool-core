@@ -2,17 +2,17 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/html/cloudschool-backend
+    destination: /var/www/html/backend
 hooks:
   ApplicationStop:
     - location: scripts/codedeploy_application_stop.sh
       timeout: 300
-      runas: root
+      runas: ubuntu
   BeforeInstall:
     - location: scripts/codedeploy_before_install.sh
       timeout: 300
-      runas: root
+      runas: ubuntu
   ApplicationStart:
     - location: scripts/codedeploy_application_start.sh
       timeout: 300
-      runas: root
+      runas: ubuntu
