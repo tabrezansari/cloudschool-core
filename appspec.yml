@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/html/backend
+    destination: /var/www/html/cloudschool-backend
 hooks:
   ApplicationStop:
     - location: scripts/codedeploy_application_stop.sh
