@@ -1,8 +1,9 @@
 const AWS = require("aws-sdk");
+const dotenv = require("dotenv");
 
 AWS.config.update({
-  accessKeyId: "AKIA3FFQLGDOKIBZGJPB",
-  secretAccessKey: "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",
+  accessKeyId: process.env.AWS_ACCESS_ID,
+  secretAccessKey: process.env.AWS_ACCESS_KEY,
   region: "ap-south-1",
 });
 
@@ -10,7 +11,7 @@ const s3 = new AWS.S3();
 
 async function uploadAsset(path, fileBuffer, filename) {
   const params = {
-    Bucket: "cschoolstage" + path,
+    Bucket: "cloudeskoolstage" + path,
     Key: filename,
     Body: fileBuffer,
   };
@@ -29,7 +30,7 @@ async function uploadMultipleAsset(path, fileBuffer) {
 
   fileBuffer.map(async (file) => {
     let bucketPayload = {
-      Bucket: "cschoolstage" + path,
+      Bucket: "cloudeskoolstage" + path,
       Key: file.filename,
       Body: file.file.buffer,
     };
