@@ -5,7 +5,7 @@ module.exports = () => {
   const region = "ap-south-1";
   const client = new AWS.SecretsManager({ region });
 
-  const SecretId = "stage_secret";
+  const SecretId = "prodsecret";
   return new Promise((resolve, reject) => {
     //retrieving secrets from secrets manager
     client.getSecretValue({ SecretId }, (err, data) => {
@@ -19,6 +19,7 @@ module.exports = () => {
         Object.keys(secretsJSON).forEach((key) => {
           secretsString += `${key}=${secretsJSON[key]}\n`;
         });
+        console.log("secret string", secretsString);
         resolve(secretsString);
       }
     });
