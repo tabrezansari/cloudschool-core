@@ -54,11 +54,11 @@ app.use((err, req, res, next) => {
 
 app.listen(port, async () => {
   try {
-    // const secretsString = await retrieveSecrets();
+    const secretsString = await retrieveSecrets();
     // console.log("Screts", secretsString);
     // console.log("env are:", secretsString);
     // write to .env file at root level of project:
-    // await fs.writeFile(".env", secretsString);
+    await fs.writeFile(".env", secretsString);
 
     dotenv.config();
     //
